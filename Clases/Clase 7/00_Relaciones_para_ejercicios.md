@@ -4,13 +4,13 @@
 
 ### EMPLEADO
 
-| id_empleado | nombre     | depto   | salario | id_depto |
-|--------------|------------|----------|----------|-----------|
-| 1 | Ana Torres  | Ventas   | 2500 | 10 |
-| 2 | Luis Pérez  | Finanzas | 1800 | 20 |
-| 3 | Marta Díaz  | Ventas   | 2100 | 10 |
-| 4 | Pedro Gómez | IT       | 3200 | 30 |
-| 5 | Laura Ruiz  | Finanzas | 2600 | 20 |
+| id_empleado | nombre     | salario | id_depto |
+|--------------|------------|----------|-----------|
+| 1 | Ana Torres  |2500 | 10 |
+| 2 | Luis Pérez  |  1800 | 20 |
+| 3 | Marta Díaz  | 2100 | 10 |
+| 4 | Pedro Gómez |  3200 | 30 |
+| 5 | Laura Ruiz  |  2600 | 20 |
 
 ---
 
@@ -27,6 +27,18 @@
 ### CLIENTE
 
 | id_cliente | nombre       | ciudad     | edad | tipo |
+|-------------|--------------|-------------|------|------|
+| 1 | Carlos Vega   | Madrid     | 25 | Premium |
+| 2 | Sofía López   | Sevilla    | 31 | Estándar |
+| 3 | Javier Ramos  | Valencia   | 22 | Premium |
+| 4 | Elena Navarro | Madrid     | 27 | Estándar |
+| 5 | Diego Morales | Bilbao     | 35 | Premium |
+
+---
+
+### ESTUDIANTE
+
+| id_estudiante | nombre       | ciudad     | edad | tipo |
 |-------------|--------------|-------------|------|------|
 | 1 | Carlos Vega   | Madrid     | 25 | Premium |
 | 2 | Sofía López   | Sevilla    | 31 | Estándar |
@@ -110,7 +122,7 @@
 
 ### PROYECTO
 
-| id_proyecto | nombre_proy | tipo          | cliente |
+| id_proyecto | nombre_proy | tipo          | empresa|
 |--------------|--------------|----------------|----------|
 | 100 | Alfa     | Nacional      | CEVISA |
 | 200 | Beta     | Internacional | COMEX |

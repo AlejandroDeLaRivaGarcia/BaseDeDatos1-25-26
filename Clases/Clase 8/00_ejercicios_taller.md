@@ -2,12 +2,13 @@
 
 ## EMPLEADO
 
-| id_empleado | nombre      | depto     | salario | id_depto |
-|--------------|-------------|-----------|----------|-----------|
-| 1 | Ana Torres  | Ventas    | 2500 | 10 |
-| 2 | Luis Pérez  | Finanzas  | 1800 | 20 |
-| 3 | Laura Ruiz  | Finanzas  | 2600 | 20 |
-| 4 | Pedro Gómez | IT        | 3200 | 30 |
+| id_empleado | nombre      |  salario | id_depto |
+|--------------|-------------|----------|-----------|
+| 1 | Ana Torres  | 2500 | 10 |
+| 2 | Luis Pérez  |  1800 | 20 |
+| 3 | Laura Ruiz  | 2600 | 20 |
+| 4 | Pedro Gómez |3200 | 30 |
+
 
 ## DEPARTAMENTO
 
