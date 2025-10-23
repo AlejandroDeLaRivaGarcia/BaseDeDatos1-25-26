@@ -77,7 +77,7 @@
    Resultado en variable A1:
    A1 = selección(nombre = 'Ana')(USUARIO)
    
-   | id\_usuario | nombre | email         |
+| id\_usuario | nombre | email         |
 | ------------- | -------- | --------------- |
 | 1           | Ana    | [ana@mail.com]() |
    
@@ -87,7 +87,7 @@
    Resultado en variable A2:
    A2 = A1 join PRESTAMO (por id\_usuario)
    
-   | id\_usuario | nombre | id\_prestamo | fecha\_prestamo | fecha\_devolucion |
+| id\_usuario | nombre | id\_prestamo | fecha\_prestamo | fecha\_devolucion |
 | ------------- | -------- | -------------- | ----------------- | ------------------- |
 | 1           | Ana    | 100          | 2024-04-01      | 2024-04-10        |
    
@@ -97,7 +97,7 @@
    Resultado en variable A3:
    A3 = A2 join LIBRO (por id\_libro)
    
-   | id\_usuario | nombre | email         |id\_libro | titulo                   | autor      | id\_categoria |
+| id\_usuario | nombre | email         |id\_libro | titulo                   | autor      | id\_categoria |
 | ------------- | -------- | --------------- |----------- | -------------------------- | ------------ | --------------- |
 | 1           | Ana    | [ana@mail.com]() |10        | Los Orígenes del Hombre | Darwin     | 2             |
 | 1           | Ana    | [ana@mail.com]() | 11        | La Odisea                | Homero     | 3             |
@@ -108,7 +108,7 @@
    Resultado final:
    π(titulo)(A3)
    
-   | titulo                   |
+| titulo                   |
 | -------------------------- |
 | Los Orígenes del Hombre |
 | La Odisea                |
@@ -121,7 +121,7 @@
    Seleccionamos las multas con estado = 'Pendiente'.
    B1 = selección(estado = 'Pendiente')(MULTA)
    
-   | id\_multa | id\_prestamo | monto | estado    |
+| id\_multa | id\_prestamo | monto | estado    |
 | ----------- | -------------- | ------- | ----------- |
 | 1         | 102          | 15.00 | Pendiente |
    
@@ -130,7 +130,7 @@
    Unimos B1 con PRESTAMO para conocer qué préstamo generó la multa.
    B2 = B1 join PRESTAMO (por id\_prestamo)
    
-   | id\_prestamo | id\_usuario | nombre | email                                | monto | estado    |
+| id\_prestamo | id\_usuario | nombre | email                                | monto | estado    |
 | -------------- | ------------- | -------- | -------------------------------------- | ------- | ----------- |
 | 102          | 3           | Carla  | [carla@mail.com](mailto:carla@mail.com) | 15.00 | Pendiente |
    
@@ -141,7 +141,7 @@
 4. **Proyección:**
    π(nombre, email)(B3)
    
-   | nombre | email                                |
+| nombre | email                                |
 | -------- | -------------------------------------- |
 | Carla  | [carla@mail.com](mailto:carla@mail.com) |
    
@@ -153,7 +153,7 @@
    Seleccionamos las categorías con nombre\_categoria = 'Ciencia'.
    C1 = selección(nombre\_categoria = 'Ciencia')(CATEGORIA)
    
-   | id\_categoria | nombre\_categoria |
+| id\_categoria | nombre\_categoria |
 | --------------- | ------------------- |
 | 2             | Ciencia           |
    
@@ -161,7 +161,7 @@
 2. **Join con LIBRO:**
    C2 = C1 join LIBRO (por id\_categoria)
    
-   | id\_categoria | nombre\_categoria | id\_libro | titulo                   | autor      |
+| id\_categoria | nombre\_categoria | id\_libro | titulo                   | autor      |
 | --------------- | ------------------- | ----------- | -------------------------- | ------------ |
 | 2             | Ciencia           | 10        | Los Orígenes del Hombre | Darwin     |
 | 2             | Ciencia           | 13        | El Cosmos                | Carl Sagan |
@@ -170,7 +170,7 @@
 3. **Join con PRESTAMO:**
    C3 = C2 join PRESTAMO (por id\_libro)
    
-   | id\_prestamo | id\_usuario | id\_libro | titulo    | autor      |
+| id\_prestamo | id\_usuario | id\_libro | titulo    | autor      |
 | -------------- | ------------- | ----------- | ----------- | ------------ |
 | 102          | 3           | 13        | El Cosmos | Carl Sagan |
    
@@ -178,7 +178,7 @@
 4. **Proyección:**
    π(titulo, autor)(C3)
    
-   | titulo    | autor      |
+| titulo    | autor      |
 | ----------- | ------------ |
 | El Cosmos | Carl Sagan |
    
