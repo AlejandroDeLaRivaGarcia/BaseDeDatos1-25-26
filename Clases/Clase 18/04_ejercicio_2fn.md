@@ -22,7 +22,7 @@ INSERT INTO detalle_venta VALUES
 (3, 2, 'Cafetera', 70, 1, 70);
 ```
 
-🔍 Aquí `nombre_producto` y `precio` dependen solo de `id_producto`, no del par `(id_venta, id_producto)` → violación de 2FN.
+ Aquí `nombre_producto` y `precio` dependen solo de `id_producto`, no del par `(id_venta, id_producto)` → violación de 2FN.
 
 ### 1. Crear nueva tabla para los productos
 
@@ -56,5 +56,5 @@ DROP COLUMN nombre_producto,
 DROP COLUMN precio;
 ```
 
- Ahora cada tabla contiene atributos dependientes solo de su clave primaria → cumple ​**2FN**​.
+Ahora cada tabla contiene atributos dependientes solo de su clave primaria → cumple ​**2FN**​.
 

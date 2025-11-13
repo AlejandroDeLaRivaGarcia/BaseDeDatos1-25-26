@@ -14,6 +14,10 @@ Una tabla está en **Primera Forma Normal (1FN)** si:
 2. ​**Cada registro es único**​, identificado por una clave primaria.
 3. **No hay grupos repetitivos ni campos multivaluados.**
 
+* **Valores atómicos:** **Cada celda de la tabla debe contener un único valor. No se permiten celdas con múltiples valores, como una lista de números de teléfono en un solo campo.**
+* **Sin grupos repetitivos:** **No debe haber grupos de columnas que se repitan para el mismo tipo de información dentro de una misma fila. Si existen, deben separarse en tablas diferentes.**
+* **No hay atributos multivaluados:** **Cada columna debe contener un solo tipo de información. Por ejemplo, no se permiten columnas con valores separados por coma o punto y coma.**
+
 ### Ejemplo no normalizado
 
 PEDIDO
