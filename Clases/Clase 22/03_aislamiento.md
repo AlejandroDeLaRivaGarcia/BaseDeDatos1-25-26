@@ -19,21 +19,53 @@ COMMIT;
 ## **Ejemplo integral de control de transacciones**
 
 ```sql
-SET autocommit = 0;
+DELIMITER $$
 
-START TRANSACTION;
+CREATE PROCEDURE prueba_transaccion_stock()
+BEGIN
+    DECLARE nuevo_stock INT;
+    DECLARE id_pedido_generado INT;
 
-UPDATE producto SET stock = stock - 5 WHERE id_producto = 3;
-INSERT INTO pedido (id_cliente, fecha, total) VALUES (2, NOW(), 500.00);
-INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal)
-VALUES (LAST_INSERT_ID(), 3, 5, 500.00);
+    SET autocommit = 0;
 
-IF (SELECT stock FROM producto WHERE id_producto = 3) < 0 THEN
-    ROLLBACK;
-ELSE
-    COMMIT;
-END IF;
+    START TRANSACTION;
+
+    -- Restar stock de dos productos quemados
+    UPDATE producto SET stock = stock - 1 WHERE id_producto = 1;
+    UPDATE producto SET stock = stock - 2 WHERE id_producto = 2;
+
+    -- Revisar el stock menor de los dos productos
+    SELECT MIN(stock) INTO nuevo_stock
+    FROM producto
+    WHERE id_producto IN (1, 2);
+
+    -- Si el stock quedó negativo, revertimos todo
+    IF nuevo_stock < 0 THEN
+        ROLLBACK;
+        SELECT 'ROLLBACK ejecutado: Stock insuficiente.' AS resultado,
+               nuevo_stock AS stock_restante;
+    ELSE
+        -- Creamos el pedido
+        INSERT INTO pedido (id_cliente, fecha, total)
+        VALUES (1, NOW(), 300.00);
+
+        SET id_pedido_generado = LAST_INSERT_ID();
+
+        -- Insertamos 2 detalles quemados
+        INSERT INTO detalle_pedido (id_pedido, id_producto, cantidad, subtotal)
+        VALUES
+            (id_pedido_generado, 1, 1, 100.00),
+            (id_pedido_generado, 2, 2, 200.00);
+
+        COMMIT;
+
+        SELECT 'COMMIT exitoso: Pedido registrado.' AS resultado,
+               id_pedido_generado AS pedido,
+               nuevo_stock AS stock_restante;
+    END IF;
+
+END $$
+
+DELIMITER ;
 ```
-
-
 

@@ -155,7 +155,74 @@ JOIN producto p ON pc.nombre_producto = p.nombre_producto
 JOIN subcategoria s ON pc.subcategoria = s.nombre_subcategoria;
 ```
 
-c) Eliminar las tablas no normalizadas originales
+#### c) Crear tablas pivote (5F)
+
+```sql
+CREATE TABLE proveedor_producto (
+  id_proveedor INT,
+  id_producto INT,
+  PRIMARY KEY (id_proveedor, id_producto)
+);
+
+CREATE TABLE proveedor_region (
+  id_proveedor INT,
+  id_region INT,
+  PRIMARY KEY (id_proveedor, id_region)
+);
+
+CREATE TABLE producto_region (
+  id_producto INT,
+  id_region INT,
+  PRIMARY KEY (id_producto, id_region)
+);
+```
+
+#### d) Poblar tablas pivote
+
+```sql
+INSERT INTO proveedor_region (id_proveedor, id_region)
+SELECT DISTINCT p.id_proveedor, r.id_region
+FROM proveedor_producto_region ppr
+JOIN proveedor p
+  ON ppr.nombre_proveedor = p.nombre_proveedor
+JOIN region_distribucion r
+  ON ppr.region = r.nombre_region;
+
+INSERT INTO proveedor_region (id_proveedor, id_region)
+SELECT DISTINCT p.id_proveedor, r.id_region
+FROM proveedor_producto_region ppr
+JOIN proveedor p
+  ON ppr.nombre_proveedor = p.nombre_proveedor
+JOIN region_distribucion r
+  ON ppr.region = r.nombre_region;
+
+INSERT INTO proveedor_region (id_proveedor, id_region)
+SELECT DISTINCT p.id_proveedor, r.id_region
+FROM proveedor_producto_region ppr
+JOIN proveedor p
+  ON ppr.nombre_proveedor = p.nombre_proveedor
+JOIN region_distribucion r
+  ON ppr.region = r.nombre_region;
+```
+
+#### e) Agregar claves foráneas
+
+```sql
+ALTER TABLE proveedor_producto
+  ADD FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor),
+  ADD FOREIGN KEY (id_producto)  REFERENCES producto(id_producto);
+
+ALTER TABLE proveedor_region
+  ADD FOREIGN KEY (id_proveedor) REFERENCES proveedor(id_proveedor),
+  ADD FOREIGN KEY (id_region)    REFERENCES region_distribucion(id_region);
+
+ALTER TABLE producto_region
+  ADD FOREIGN KEY (id_producto) REFERENCES producto(id_producto),
+  ADD FOREIGN KEY (id_region)   REFERENCES region_distribucion(id_region);
+
+```
+
+#### f) Eliminar las tablas no normalizadas originales
 
 ```sql
 DROP TABLE producto_categoria;
