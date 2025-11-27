@@ -41,10 +41,45 @@ DELIMITER ;
 **Objetivo:** registrar el pago y confirmar entrega en la misma transacción.
 
 ```sql
-START TRANSACTION;
-INSERT INTO pago (id_venta, monto, fecha_pago) VALUES (1, 950.00, NOW());
-UPDATE venta SET total = total - 950.00 WHERE id_venta = 1;
-COMMIT;
+DELIMITER $$
+
+CREATE PROCEDURE procesar_pago_total (
+    IN p_id_venta INT,
+    IN p_monto_pago DECIMAL(10,2)
+)
+BEGIN
+    DECLARE total_detalle DECIMAL(10,2);
+    DECLARE nuevo_total DECIMAL(10,2);
+
+    START TRANSACTION;
+
+    -- Calcular total desde los detalles
+    SELECT SUM(subtotal)
+    INTO total_detalle
+    FROM detalle_venta
+    WHERE id_venta = p_id_venta;
+
+    -- Validar pago suficiente antes de registrar
+    IF p_monto_pago < total_detalle THEN
+        ROLLBACK;
+        SELECT 'Pago insuficiente. Transacción cancelada.' AS resultado;
+    ELSE
+        -- Registrar el pago
+        INSERT INTO pago (id_venta, monto, fecha_pago)
+        VALUES (p_id_venta, p_monto_pago, NOW());
+
+        -- Actualizar estado de la venta
+        UPDATE venta
+        SET total = total_detalle, estado = 'Pagado'
+        WHERE id_venta = p_id_venta;
+
+        COMMIT;
+        SELECT 'Pago recibido y venta confirmada.' AS resultado;
+    END IF;
+
+END$$
+
+DELIMITER ;
 ```
 
 ## **5. Ejercicio 3 — Uso de SAVEPOINT**
